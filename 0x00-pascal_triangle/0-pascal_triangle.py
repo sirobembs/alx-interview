@@ -1,19 +1,24 @@
 #!/usr/bin/python3
 """
-    Pascal Triangle
+    pascal's triangle implementation
 """
+
 
 def pascal_triangle(n):
     """
-    n = no of rows
-    returns: list of integers implemeting pascle tringle
+        n == number of rows
+        Return: list of lists of integers representing pascal's triangle of n
     """
-    for i in range(n+1):
-        for j in range(n-i):
-            print(' ', end='')
+    if n <= 0:
+        return []
 
-        body = 1
-        for j in range(1, i+1):
-            print(body, ' ', sep='', end='')
-            body = body * (i - j) // j
-        print()
+    output = [[1]]
+
+    for i in range(n - 1):
+        temp = [0] + output[-1] + [0]
+        row = []
+        for j in range(len(output[-1]) + 1):
+            row.append(temp[j] + temp[j + 1])
+        output.append(row)
+
+    return (output)
