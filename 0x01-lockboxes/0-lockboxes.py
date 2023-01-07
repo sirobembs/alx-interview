@@ -1,24 +1,28 @@
 #!/usr/bin/python3
-
 """Exercise to practice interview"""
+from itertools import dropwhile
 
 
 def canUnlockAll(boxes):
-    """Set to store the keys we have seen so far"""
-    seen = set()
-    """Add the keys from the first box to the set"""
-    seen.update(boxes[0])
-    """Set of boxes we need to check"""
-    to_check = seen.copy()
+    """Checks if all boxes can be unlocked"""
 
-    """Keep checking boxes while there are boxes to check"""
-    while to_check:
-        """Take a box to check"""
-        box = to_check.pop()
-        """Add its keys to the set of seen keys"""
-        seen.update(boxes[box])
-        """Add the boxes that can be unlocked with the new keys to the set of boxes to check"""
-        to_check.update(set(boxes[box]) - seen)
+    keys = {0}
+    range_boxes = range(len(boxes))
 
-    """Return whether all boxes have been seen"""
-    return len(seen) == len(boxes)
+    while True:
+        not_found = set()
+
+        for i in range_boxes:
+            if i in keys:
+                for key in dropwhile(lambda k: k in keys, boxes[i]):
+                    keys.add(key)
+            else:
+                not_found.add(i)
+
+        if range_boxes == not_found:
+            return False
+
+        if not not_found:
+            return True
+
+        range_boxes = not_found
