@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ method that determine a valid UTF-8 encoding."""
 
+
 def validUTF8(data):
     """
     Encode UTF-8
